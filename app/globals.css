@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Set global variables with new color scheme */
+:root {
+  --background-color: #f8f9ff;  /* Light blue-tinted white for a fresh feel */
+  --card-color: #ffffff;        /* White for cards to stand out */
+  --text-color-primary: #255d77;/* Navy blue text for primary content */
+  --text-color-secondary: #00141d; /* Same blue for secondary text */
+  --accent-color: #FF5A5F;      /* Airbnb-like accent color for highlights */
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Consistent shadow */
+}
+
+html, body, :root {
+  height: 100%;
+  background-color: var(--background-color); /* Fresh background color */
+  color: var(--text-color-secondary); /* Default text color set for readability */
+  font-family: 'Arial', sans-serif; /* Consistent and clean font */
+  transition: background-color 0.3s ease; /* Smooth transition for theme changes */
+}
+
+/* Specific adjustments for leaflet map components to reset z-index */
+.leaflet-bottom, .leaflet-control, .leaflet-pane, .leaflet-top {
+  z-index: 0 !important;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1)); /* Subtle shadow for depth */
+}
+
+.leaflet-control {
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--card-color);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Style adjustments for the react-date-range calendar */
+.rdrMonth {
+  width: 100% !important;
+  background-color: var(--card-color); /* Card color for calendar month headers */
+  color: var(--text-color-primary); /* Ensuring text is visible on dark background */
+  padding: 10px; /* Added padding for better spacing */
+  border-radius: 8px; /* Rounded corners for a modern look */
+}
+
+.rdrCalendarWrapper {
+  width: 100% !important;
+  font-size: 16px !important;
+  padding: 10px; /* Consistent padding around the calendar */
+  background-color: var(--background-color); /* Background color for the wrapper */
+  box-shadow: var(--shadow); /* Subtle shadow for depth */
+  border-radius: 8px; /* Rounded corners for stylistic consistency */
+}
+
+.rdrDateDisplayItem {
+  border-radius: 8px;
+  background-color: var(--card-color);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.rdrDateDisplayItemActive {
+  border-color: var(--accent-color);
+}
+
+.rdrDayToday .rdrDayNumber span:after {
+  background-color: var(--accent-color);
+}

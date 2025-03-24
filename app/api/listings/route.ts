@@ -1,40 +1,35 @@
 import { NextResponse } from "next/server";
-import  prisma  from "@/app/libs/prismadb";
+import prisma from "@/app/libs/prismadb";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 
-
-
 export async function POST(request: Request) {
-    const currentUser = await getCurrentUser();
-  
-    if (!currentUser) {
-      return NextResponse.error();
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) {
+    return NextResponse.error();
+  }
+
+  const body = await request.json();
+  const {
+    title,
+    description,
+    imageSrc,
+    category,
+    roomCount,
+    bathroomCount,
+    guestCount,
+    location,
+    price,
+  } = body;
+
+  // Ensuring all properties are present
+  Object.keys(body).forEach((value: string) => { // Corrected type from any to string
+    if (!body[value]) {
+      NextResponse.error();
     }
-  
-    const body = await request.json();
-    const {
-      title,
-      description,
-      imageSrc,
-      category,
-      roomCount,
-      bathroomCount,
-      guestCount,
-      location,
-      price,
-    } = body;
+  });
 
-
-    ///4:45:50 time 
-    // you can remove this if i want to 
-   Object.keys(body).forEach((value:any) =>{
-    if (!body[value]){
-        NextResponse.error();
-    }
-   });
-
-
-   const listing = await prisma.listing.create({
+  const listing = await prisma.listing.create({
     data: {
       title,
       description,
@@ -48,8 +43,6 @@ export async function POST(request: Request) {
       userId: currentUser.id,
     },
   });
-  
+
   return NextResponse.json(listing);
-  
-  }
-  
+}

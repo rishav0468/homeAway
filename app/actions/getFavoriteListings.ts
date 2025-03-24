@@ -22,7 +22,12 @@ export default async function getFavoriteListings() {
     }));
 
     return safeFavorites;
-  } catch (error: any) {
-    throw new Error(error.message);
+  } catch (error: unknown) {
+    if (error instanceof Error) { // Type guard to check if error is an instance of Error
+      throw new Error(error.message); // Safely access the `message` property
+    } else {
+      throw new Error('An unknown error occurred');
+    }
+    
   }
 }

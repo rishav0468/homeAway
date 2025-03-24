@@ -1,5 +1,3 @@
-
-
 import prisma from "@/app/libs/prismadb";
 
 interface IParams {
@@ -8,15 +6,17 @@ interface IParams {
   authorId?: string;
 }
 
+interface Query {
+  listingId?: string;
+  userId?: string;
+  listing?: { userId?: string };
+}
+
 export default async function getRents(params: IParams) {
   try {
-    const resolvedParams = await params;
-    
-    const listingId = resolvedParams.listingId;
-    const userId = resolvedParams.userId;
-    const authorId = resolvedParams.authorId;
+    const { listingId, userId, authorId } = params;  // Directly destructured for simplicity
 
-    const query: any = {};
+    const query: Query = {}; // Use the newly defined Query interface
 
     if (listingId) {
       query.listingId = listingId;
@@ -52,7 +52,11 @@ export default async function getRents(params: IParams) {
     }));
 
     return safeRents;
-  } catch (error: any) {
-    throw new Error(error.message);
+  } catch (error: unknown) {  // Changed from 'any' to 'unknown'
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error('An unexpected error occurred');
+    }
   }
 }

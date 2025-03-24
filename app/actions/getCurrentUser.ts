@@ -32,9 +32,10 @@ export default async function getCurrentUser() {
         updatedAt: currentUser.updatedAt.toISOString(),
         emailVerified: currentUser.emailVerified?.toISOString() || null,
       };
-  } catch (error: any) {
+  } catch (error: unknown) {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     /* eslint-disable @typescript-eslint/no-explicit-any */
+    console.error("Error fetching user:", error); 
     return null;
   }
 }

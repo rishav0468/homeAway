@@ -12,7 +12,7 @@ export interface IListingsParams {
   category?: string;
 }
 
-interface Query extends Prisma.ListingWhereInput {}
+type Query = Prisma.ListingWhereInput;
 
 export default async function getListings(params: IListingsParams) {
   try {

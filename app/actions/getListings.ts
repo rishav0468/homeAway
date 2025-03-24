@@ -10,6 +10,7 @@ export interface IListingsParams{
   endDate?: string;
   locationValue?: string;
   category?: string;
+  NOT?: any;
 }
 
 export default async function getListings(
@@ -95,7 +96,11 @@ export default async function getListings(
         createdAt: listing.createdAt.toString()
     }));
     return safeListings;
-  } catch (error: any) {
-    throw new Error(error);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw error; // This retains the original error stack
+    } else {
+      throw new Error('An unknown error occurred');
+    }
   }
 }

@@ -37,7 +37,11 @@ export default async function getListingById(
             listing.user.emailVerified?.toISOString() || null,
         }
       };
-    }catch(error: any){
-      throw new Error(error);
+    }catch(error: unknown){
+      if (error instanceof Error) {
+        throw error; // Throw the existing error object if it is an Error
+    } else {
+        throw new Error('An unknown error occurred'); // Throw a generic error if the caught error is not an Error object
+    }
     }
   }

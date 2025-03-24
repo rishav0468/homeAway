@@ -1,3 +1,5 @@
+
+
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import prisma from "@/app/libs/prismadb";
@@ -31,6 +33,8 @@ export default async function getCurrentUser() {
         emailVerified: currentUser.emailVerified?.toISOString() || null,
       };
   } catch (error: any) {
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     return null;
   }
 }
